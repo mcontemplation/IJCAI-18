@@ -91,7 +91,36 @@ train['occupation_cate_rate'] = train['occupation_cate_buy']/train['occupation_c
 # train['user_cate_brate'] = train['user_cate_buy']/train['user_click_buy_total']
 train[['occupation_cate_rate','user_occupation_id','cate2']].to_csv('data/occupation_cate_feature1.csv',index=None)
 # 'occupation_cate_click','occupation_cate_buy',
+# 该类
+# 该年龄点击该类目次数
+t = train[['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']]
+t['gosa_cate_click'] = 1
+t = t.groupby(['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类目次数
+t = train[['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2','is_trade']]
+t = t.groupby(['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'gosa_cate_buy'})
+train = pd.merge(train,t,on=['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类别率
+train['gosa_cate_rate'] = train['gosa_cate_buy']/train['gosa_cate_click']
 
+train[['gosa_cate_rate','user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']].to_csv('data/gosa_cate_feature1.csv',index=None)
+# 该年龄星级
+# 该年龄点击该类目次数
+t = train[['user_star_level','user_age_level','cate2']]
+t['star_age_cate_click'] = 1
+t = t.groupby(['user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类目次数
+t = train[['user_star_level','user_age_level','cate2','is_trade']]
+t = t.groupby(['user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'star_age_cate_buy'})
+train = pd.merge(train,t,on=['user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类别率
+train['star_age_cate_rate'] = train['star_age_cate_buy']/train['star_age_cate_click']
+
+train[['star_age_cate_rate','user_star_level','user_age_level','cate2']].to_csv('data/star_age_cate_feature1.csv',index=None)
 
 # 从训练集2
 train = pd.read_csv('data/train2_f.csv')
@@ -177,6 +206,37 @@ train['occupation_cate_rate'] = train['occupation_cate_buy']/train['occupation_c
 # train['user_cate_brate'] = train['user_cate_buy']/train['user_click_buy_total']
 train[['occupation_cate_rate','user_occupation_id','cate2']].to_csv('data/occupation_cate_feature2.csv',index=None)
 # 'occupation_cate_click','occupation_cate_buy',
+# 该类
+# 该年龄点击该类目次数
+t = train[['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']]
+t['gosa_cate_click'] = 1
+t = t.groupby(['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类目次数
+t = train[['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2','is_trade']]
+t = t.groupby(['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'gosa_cate_buy'})
+train = pd.merge(train,t,on=['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类别率
+train['gosa_cate_rate'] = train['gosa_cate_buy']/train['gosa_cate_click']
+
+train[['gosa_cate_rate','user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']].to_csv('data/gosa_cate_feature2.csv',index=None)
+# 该年龄星级
+# 该年龄点击该类目次数
+t = train[['user_star_level','user_age_level','cate2']]
+t['star_age_cate_click'] = 1
+t = t.groupby(['user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类目次数
+t = train[['user_star_level','user_age_level','cate2','is_trade']]
+t = t.groupby(['user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'star_age_cate_buy'})
+train = pd.merge(train,t,on=['user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类别率
+train['star_age_cate_rate'] = train['star_age_cate_buy']/train['star_age_cate_click']
+
+train[['star_age_cate_rate','user_star_level','user_age_level','cate2']].to_csv('data/star_age_cate_feature2.csv',index=None)
+
 
 
 # 从训练集3
@@ -263,3 +323,36 @@ train['occupation_cate_rate'] = train['occupation_cate_buy']/train['occupation_c
 # train['user_cate_brate'] = train['user_cate_buy']/train['user_click_buy_total']
 train[['occupation_cate_rate','user_occupation_id','cate2']].to_csv('data/occupation_cate_feature3.csv',index=None)
 # 'occupation_cate_click','occupation_cate_buy',
+
+# 该类
+# 该年龄点击该类目次数
+t = train[['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']]
+t['gosa_cate_click'] = 1
+t = t.groupby(['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类目次数
+t = train[['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2','is_trade']]
+t = t.groupby(['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'gosa_cate_buy'})
+train = pd.merge(train,t,on=['user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类别率
+train['gosa_cate_rate'] = train['gosa_cate_buy']/train['gosa_cate_click']
+
+train[['gosa_cate_rate','user_occupation_id','user_gender_id','user_star_level','user_age_level','cate2']].to_csv('data/gosa_cate_feature3.csv',index=None)
+
+# 该年龄星级
+# 该年龄点击该类目次数
+t = train[['user_star_level','user_age_level','cate2']]
+t['star_age_cate_click'] = 1
+t = t.groupby(['user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类目次数
+t = train[['user_star_level','user_age_level','cate2','is_trade']]
+t = t.groupby(['user_star_level','user_age_level','cate2']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'star_age_cate_buy'})
+train = pd.merge(train,t,on=['user_star_level','user_age_level','cate2'],how='left')
+# 该年龄购买该类别率
+train['star_age_cate_rate'] = train['star_age_cate_buy']/train['star_age_cate_click']
+
+train[['star_age_cate_rate','user_star_level','user_age_level','cate2']].to_csv('data/star_age_cate_feature3.csv',index=None)
+

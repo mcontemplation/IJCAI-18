@@ -60,6 +60,19 @@ train = pd.merge(train,t,on=['user_star_level','item_brand_id'],how='left')
 train['star_brand_rate'] = train['star_brand_buy']/train['star_brand_click']
 train[['star_brand_buy','star_brand_click','star_brand_rate','user_star_level','item_brand_id']].to_csv('data/star_brand_feature1.csv',index=None)
 
+# 职业星级年龄
+t = train[['user_star_level','user_age_level','user_occupation_id','item_brand_id','is_trade']]
+t = t.groupby(['user_star_level','user_age_level','user_occupation_id','item_brand_id']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'occupation_star_age_brand_buy'})
+train = pd.merge(train,t,on=['user_star_level','user_age_level','user_occupation_id','item_brand_id'],how='left')
+# 该职业点击该品牌次数
+t = train[['user_star_level','user_age_level','user_occupation_id','item_brand_id']]
+t['occupation_star_age_brand_click'] = 1
+t = t.groupby(['user_star_level','user_age_level','user_occupation_id','item_brand_id']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_star_level','user_age_level','user_occupation_id','item_brand_id'],how='left')
+# 该职业购买率
+train['occupation_star_age_brand_rate'] = train['occupation_star_age_brand_buy']/train['occupation_star_age_brand_click']
+train[['occupation_star_age_brand_buy','occupation_star_age_brand_click','occupation_star_age_brand_rate','user_star_level','user_age_level','user_occupation_id','item_brand_id']].to_csv('data/occupation_star_age_brand_feature1.csv',index=None)
 
 
 
@@ -117,6 +130,19 @@ train = pd.merge(train,t,on=['user_star_level','item_brand_id'],how='left')
 # 该职业购买率
 train['star_brand_rate'] = train['star_brand_buy']/train['star_brand_click']
 train[['star_brand_buy','star_brand_click','star_brand_rate','user_star_level','item_brand_id']].to_csv('data/star_brand_feature2.csv',index=None)
+# 职业星级年龄
+t = train[['user_star_level','user_age_level','user_occupation_id','item_brand_id','is_trade']]
+t = t.groupby(['user_star_level','user_age_level','user_occupation_id','item_brand_id']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'occupation_star_age_brand_buy'})
+train = pd.merge(train,t,on=['user_star_level','user_age_level','user_occupation_id','item_brand_id'],how='left')
+# 该职业点击该品牌次数
+t = train[['user_star_level','user_age_level','user_occupation_id','item_brand_id']]
+t['occupation_star_age_brand_click'] = 1
+t = t.groupby(['user_star_level','user_age_level','user_occupation_id','item_brand_id']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_star_level','user_age_level','user_occupation_id','item_brand_id'],how='left')
+# 该职业购买率
+train['occupation_star_age_brand_rate'] = train['occupation_star_age_brand_buy']/train['occupation_star_age_brand_click']
+train[['occupation_star_age_brand_buy','occupation_star_age_brand_click','occupation_star_age_brand_rate','user_star_level','user_age_level','user_occupation_id','item_brand_id']].to_csv('data/occupation_star_age_brand_feature2.csv',index=None)
 
 
 
@@ -172,3 +198,17 @@ train = pd.merge(train,t,on=['user_star_level','item_brand_id'],how='left')
 # 该职业购买率
 train['star_brand_rate'] = train['star_brand_buy']/train['star_brand_click']
 train[['star_brand_buy','star_brand_click','star_brand_rate','user_star_level','item_brand_id']].to_csv('data/star_brand_feature3.csv',index=None)
+
+# 职业星级年龄
+t = train[['user_star_level','user_age_level','user_occupation_id','item_brand_id','is_trade']]
+t = t.groupby(['user_star_level','user_age_level','user_occupation_id','item_brand_id']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'occupation_star_age_brand_buy'})
+train = pd.merge(train,t,on=['user_star_level','user_age_level','user_occupation_id','item_brand_id'],how='left')
+# 该职业点击该品牌次数
+t = train[['user_star_level','user_age_level','user_occupation_id','item_brand_id']]
+t['occupation_star_age_brand_click'] = 1
+t = t.groupby(['user_star_level','user_age_level','user_occupation_id','item_brand_id']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_star_level','user_age_level','user_occupation_id','item_brand_id'],how='left')
+# 该职业购买率
+train['occupation_star_age_brand_rate'] = train['occupation_star_age_brand_buy']/train['occupation_star_age_brand_click']
+train[['occupation_star_age_brand_buy','occupation_star_age_brand_click','occupation_star_age_brand_rate','user_star_level','user_age_level','user_occupation_id','item_brand_id']].to_csv('data/occupation_star_age_brand_feature3.csv',index=None)

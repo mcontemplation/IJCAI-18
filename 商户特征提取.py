@@ -58,11 +58,24 @@ t2 = t2.groupby('shop_id').agg('sum').reset_index()
 store = pd.merge(store,t1,on='shop_id',how='left')
 store = pd.merge(store,t2,on='shop_id',how='left')
 
+# 该店铺被多少不同用户购买
+t = store[['user_id','shop_id','is_trade']]
+t = t[t.is_trade==1]
+t = t.drop_duplicates(subset=['user_id','shop_id'])
+t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'shop_difuser_total'})
+store = pd.merge(store,t,on=['shop_id'],how='left')
+# 该店铺售卖种类
+t = store[['shop_id','cate2','is_trade']]
+t = t[t.is_trade==1]
+t = t.drop_duplicates(subset=['shop_id','cate2'])
+t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'shop_cate2_btotal'})
+store = pd.merge(store,t,on=['shop_id'],how='left')
 
 store[['shop_click_buy_rate','shop_click_buy_total','shop_click_total','min_sale_hour','max_sale_hour','min_age','mean_age','max_age',
-       'sale_am','sale_pm','shop_id']].to_csv('data/shop_feature1.csv',index=None)
-
-
+       'sale_am','sale_pm','shop_cate2_btotal','shop_id']].to_csv('data/shop_feature1.csv',index=None)
+# 'shop_difuser_total',
 
 
 # 从训练集二中获取店铺相关的特征
@@ -115,12 +128,24 @@ t2 = t2.groupby('shop_id').agg('sum').reset_index()
 store = pd.merge(store,t1,on='shop_id',how='left')
 store = pd.merge(store,t2,on='shop_id',how='left')
 
+# 该店铺被多少不同用户购买
+t = store[['user_id','shop_id','is_trade']]
+t = t[t.is_trade==1]
+t = t.drop_duplicates(subset=['user_id','shop_id'])
+t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'shop_difuser_total'})
+store = pd.merge(store,t,on=['shop_id'],how='left')
+# 该店铺售卖种类
+t = store[['shop_id','cate2','is_trade']]
+t = t[t.is_trade==1]
+t = t.drop_duplicates(subset=['shop_id','cate2'])
+t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'shop_cate2_btotal'})
+store = pd.merge(store,t,on=['shop_id'],how='left')
 
 store[['shop_click_buy_rate','shop_click_buy_total','shop_click_total','min_sale_hour','max_sale_hour','min_age','mean_age','max_age',
-       'sale_am','sale_pm','shop_id']].to_csv('data/shop_feature2.csv',index=None)
-
-
-
+       'sale_am','sale_pm','shop_cate2_btotal','shop_id']].to_csv('data/shop_feature2.csv',index=None)
+# 'shop_difuser_total',
 # 从训练集三中获取店铺相关的特征
 train3_f = pd.read_csv('data/train3_f.csv')
 store = train3_f
@@ -171,6 +196,22 @@ t2 = t2.groupby('shop_id').agg('sum').reset_index()
 store = pd.merge(store,t1,on='shop_id',how='left')
 store = pd.merge(store,t2,on='shop_id',how='left')
 
+# 该店铺被多少不同用户购买
+t = store[['user_id','shop_id','is_trade']]
+t = t[t.is_trade==1]
+t = t.drop_duplicates(subset=['user_id','shop_id'])
+t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'shop_difuser_total'})
+store = pd.merge(store,t,on=['shop_id'],how='left')
+# 该店铺售卖种类
+t = store[['shop_id','cate2','is_trade']]
+t = t[t.is_trade==1]
+t = t.drop_duplicates(subset=['shop_id','cate2'])
+t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'shop_cate2_btotal'})
+store = pd.merge(store,t,on=['shop_id'],how='left')
 
-store[['shop_click_buy_rate','shop_click_buy_total','shop_click_total','min_sale_hour','max_sale_hour','min_age','mean_age','max_age',
-       'sale_am','sale_pm','shop_id']].to_csv('data/shop_feature3.csv',index=None)
+store[['shop_click_buy_rate','shop_click_buy_total','shop_click_total','min_sale_hour','max_sale_hour','mean_age','max_age',
+       'sale_am','sale_pm','shop_cate2_btotal','shop_id']].to_csv('data/shop_feature3.csv',index=None)
+# ,'shop_difuser_total'
+# ,'min_age'
