@@ -66,7 +66,19 @@ user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_oc
 user_shop['gosa_shop_rate'] = user_shop['gosa_shop_buy']/user_shop['gosa_shop_click']
 user_shop[['gosa_shop_click','gosa_shop_buy','user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']].to_csv('data/gosa_shop_feature1.csv',index=None)
 
-
+# 该星级点击该评论次数
+t = user_shop[['user_star_level','shop_review_num_level']]
+t['star_review_click_total'] = 1
+t = t.groupby(['user_star_level','shop_review_num_level'])['star_review_click_total'].agg('sum').reset_index()
+user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
+# 用户购买该店铺次数
+t = user_shop[['user_star_level','shop_review_num_level','is_trade']]
+t = t.groupby(['user_star_level','shop_review_num_level']).agg('sum').reset_index()
+t.rename(columns={'is_trade':'star_review_click_buy_total'},inplace=True)
+user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
+# 用户购买该店铺率
+user_shop['star_review_click_buy_rate'] = user_shop['star_review_click_buy_total']/user_shop['star_review_click_total']
+user_shop[['star_review_click_total','star_review_click_buy_total','star_review_click_buy_rate','user_star_level','shop_review_num_level']].to_csv('data/star_review_feature1.csv',index=None)
 
 
 # 从训练集二中获取用户店铺交互特征
@@ -126,6 +138,22 @@ user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_oc
 user_shop['gosa_shop_rate'] = user_shop['gosa_shop_buy']/user_shop['gosa_shop_click']
 user_shop[['gosa_shop_click','gosa_shop_buy','user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']].to_csv('data/gosa_shop_feature2.csv',index=None)
 
+# 该星级点击该评论次数
+t = user_shop[['user_star_level','shop_review_num_level']]
+t['star_review_click_total'] = 1
+t = t.groupby(['user_star_level','shop_review_num_level'])['star_review_click_total'].agg('sum').reset_index()
+user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
+# 用户购买该店铺次数
+t = user_shop[['user_star_level','shop_review_num_level','is_trade']]
+t = t.groupby(['user_star_level','shop_review_num_level']).agg('sum').reset_index()
+t.rename(columns={'is_trade':'star_review_click_buy_total'},inplace=True)
+user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
+# 用户购买该店铺率
+user_shop['star_review_click_buy_rate'] = user_shop['star_review_click_buy_total']/user_shop['star_review_click_total']
+user_shop[['star_review_click_total','star_review_click_buy_total','star_review_click_buy_rate','user_star_level','shop_review_num_level']].to_csv('data/star_review_feature2.csv',index=None)
+
+
+
 
 # 从训练集三中获取用户店铺交互特征
 train1_f = pd.read_csv('data/train3_f.csv')
@@ -184,3 +212,17 @@ user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_oc
 # lv
 user_shop['gosa_shop_rate'] = user_shop['gosa_shop_buy']/user_shop['gosa_shop_click']
 user_shop[['gosa_shop_click','gosa_shop_buy','user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']].to_csv('data/gosa_shop_feature3.csv',index=None)
+
+# 该星级点击该评论次数
+t = user_shop[['user_star_level','shop_review_num_level']]
+t['star_review_click_total'] = 1
+t = t.groupby(['user_star_level','shop_review_num_level'])['star_review_click_total'].agg('sum').reset_index()
+user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
+# 用户购买该店铺次数
+t = user_shop[['user_star_level','shop_review_num_level','is_trade']]
+t = t.groupby(['user_star_level','shop_review_num_level']).agg('sum').reset_index()
+t.rename(columns={'is_trade':'star_review_click_buy_total'},inplace=True)
+user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
+# 用户购买该店铺率
+user_shop['star_review_click_buy_rate'] = user_shop['star_review_click_buy_total']/user_shop['star_review_click_total']
+user_shop[['star_review_click_total','star_review_click_buy_total','star_review_click_buy_rate','user_star_level','shop_review_num_level']].to_csv('data/star_review_feature3.csv',index=None)

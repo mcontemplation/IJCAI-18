@@ -415,3 +415,4 @@ user_commodity[['occupation_star_age_click_total','occupation_star_age_click_buy
 user_commodity[[
                 'user_item_click_buy_rate','user_item_click_buy_total','user_item_click_total','user_item_diff',
                 'user_id','item_id']].to_csv('data/user_item_feature3.csv',index=None)
+

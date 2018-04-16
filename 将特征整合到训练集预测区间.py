@@ -104,6 +104,18 @@ gosa_cate_feature1 = pd.read_csv('data/gosa_cate_feature1.csv')
 gosa_cate_feature1.drop_duplicates(subset=['user_gender_id','user_occupation_id','user_star_level','user_age_level','cate2'],inplace=True)
 star_age_cate_feature1 = pd.read_csv('data/star_age_cate_feature1.csv')
 star_age_cate_feature1.drop_duplicates(subset=['user_star_level','user_age_level','cate2'],inplace=True)
+star_price_cate_feature1 = pd.read_csv('data/star_price_cate_feature1.csv')
+star_price_cate_feature1.drop_duplicates(subset=['user_star_level','item_price_level','cate2'],inplace=True)
+star_brand_cate_feature1 = pd.read_csv('data/star_brand_cate_feature1.csv')
+star_brand_cate_feature1.drop_duplicates(subset=['user_star_level','item_brand_id','cate2'],inplace=True)
+age_brand_feature1 = pd.read_csv('data/age_brand_feature1.csv')
+age_brand_feature1.drop_duplicates(subset=['user_age_level','item_brand_id'],inplace=True)
+star_review_feature1 = pd.read_csv('data/star_review_feature1.csv')
+star_review_feature1.drop_duplicates(subset=['user_star_level','shop_review_num_level'],inplace=True)
+star_sale_feature1 = pd.read_csv('data/star_sale_feature1.csv')
+star_sale_feature1.drop_duplicates(subset=['user_star_level','item_sales_level'],inplace=True)
+star_sale_price_feature1 = pd.read_csv('data/star_sale_price_feature1.csv')
+star_sale_price_feature1.drop_duplicates(subset=['user_star_level','item_sales_level','item_price_level'],inplace=True)
 
 other_user_feature1 = pd.read_csv('data/other_user_feature1.csv')
 other_user_feature1.drop_duplicates(inplace=True)
@@ -139,8 +151,8 @@ other_user_sales_feature1 = pd.read_csv('data/other_user_sales_feature1.csv')
 other_user_sales_feature1.drop_duplicates(inplace=True)
 other_shop_hour_feature1 = pd.read_csv('data/other_shop_hour_feature1.csv')
 other_shop_hour_feature1.drop_duplicates(inplace=True)
-print(train1_p.shape)
 
+print(train1_p.shape)
 train1_p = pd.merge(train1_p,user_feature1,on='user_id',how='left')
 train1_p = pd.merge(train1_p,shop_feature1,on='shop_id',how='left')
 train1_p = pd.merge(train1_p,item_feature1,on='item_id',how='left')
@@ -181,7 +193,7 @@ train1_p = pd.merge(train1_p,star_item_feature1,on=['user_star_level','item_id']
 train1_p = pd.merge(train1_p,age_star_item_feature1,on=['user_age_level','user_star_level','item_id'],how='left')
 # train1_p = pd.merge(train1_p,age_occupation_item_feature1,on=['user_age_level','user_occupation_id','item_id'],how='left')
 # train1_p = pd.merge(train1_p,occupation_star_item_feature1,on=['user_occupation_id','user_star_level','item_id'],how='left')
-train1_p = pd.merge(train1_p,occupation_star_age_item_feature1,on=['user_occupation_id','user_star_level','user_age_level','item_id'],how='left')
+# train1_p = pd.merge(train1_p,occupation_star_age_item_feature1,on=['user_occupation_id','user_star_level','user_age_level','item_id'],how='left')
 # train1_p = pd.merge(train1_p,occupation_star_age_brand_feature1,on=['user_occupation_id','user_star_level','user_age_level','item_brand_id'],how='left')
 # train1_p = pd.merge(train1_p,occupation_star_age_price_feature1,on=['user_occupation_id','user_star_level','user_age_level','item_price_level'],how='left')
 
@@ -189,7 +201,12 @@ train1_p = pd.merge(train1_p,occupation_star_age_item_feature1,on=['user_occupat
 train1_p = pd.merge(train1_p,star_cate_feature1,on=['user_star_level','cate2'],how='left')
 # train1_p = pd.merge(train1_p,star_age_cate_feature1,on=['user_star_level','user_age_level','cate2'],how='left')
 train1_p = pd.merge(train1_p,star_price_feature1,on=['user_star_level','item_price_level'],how='left')
-# train1_p = pd.merge(train1_p,)
+train1_p = pd.merge(train1_p,star_sale_feature1,on=['user_star_level','item_sales_level'],how='left')
+# train1_p = pd.merge(train1_p,star_sale_price_feature1,on=['user_star_level','item_sales_level','item_price_level'],how='left')
+# train1_p = pd.merge(train1_p,star_price_cate_feature1,on=['user_star_level','item_price_level','cate2'],how='left')
+# train1_p = pd.merge(train1_p,star_review_feature1,on=['user_star_level','shop_review_num_level'],how='left')
+# train1_p = pd.merge(train1_p,age_brand_feature1,on=['user_age_level','item_brand_id'],how='left')
+# train1_p = pd.merge(train1_p,star_brand_cate_feature1,on=['user_star_level','item_brand_id','cate2'],how='left')
 # train1_p = pd.merge(train1_p,star_shop_feature1,on=['user_star_level','shop_id'],how='left')
 # train1_p = pd.merge(train1_p,star_brand_feature1,on=['user_star_level','item_brand_id'],how='left')
 # train1_p = pd.merge(train1_p,occupation_cate_feature1,on=['user_occupation_id','cate2'],how='left')
@@ -291,6 +308,18 @@ gosa_cate_feature2 = pd.read_csv('data/gosa_cate_feature2.csv')
 gosa_cate_feature2.drop_duplicates(subset=['user_gender_id','user_occupation_id','user_star_level','user_age_level','cate2'],inplace=True)
 star_age_cate_feature2 = pd.read_csv('data/star_age_cate_feature2.csv')
 star_age_cate_feature2.drop_duplicates(subset=['user_star_level','user_age_level','cate2'],inplace=True)
+star_price_cate_feature2 = pd.read_csv('data/star_price_cate_feature2.csv')
+star_price_cate_feature2.drop_duplicates(subset=['user_star_level','item_price_level','cate2'],inplace=True)
+star_brand_cate_feature2 = pd.read_csv('data/star_brand_cate_feature2.csv')
+star_brand_cate_feature2.drop_duplicates(subset=['user_star_level','item_brand_id','cate2'],inplace=True)
+age_brand_feature2 = pd.read_csv('data/age_brand_feature2.csv')
+age_brand_feature2.drop_duplicates(subset=['user_age_level','item_brand_id'],inplace=True)
+star_review_feature2 = pd.read_csv('data/star_review_feature2.csv')
+star_review_feature2.drop_duplicates(subset=['user_star_level','shop_review_num_level'],inplace=True)
+star_sale_feature2 = pd.read_csv('data/star_sale_feature2.csv')
+star_sale_feature2.drop_duplicates(subset=['user_star_level','item_sales_level'],inplace=True)
+star_sale_price_feature2 = pd.read_csv('data/star_sale_price_feature2.csv')
+star_sale_price_feature2.drop_duplicates(subset=['user_star_level','item_sales_level','item_price_level'],inplace=True)
 
 other_user_feature2 = pd.read_csv('data/other_user_feature2.csv')
 other_user_feature2.drop_duplicates(inplace=True)
@@ -368,13 +397,19 @@ train2_p = pd.merge(train2_p,star_item_feature2,on=['user_star_level','item_id']
 train2_p = pd.merge(train2_p,age_star_item_feature2,on=['user_age_level','user_star_level','item_id'],how='left')
 # train2_p = pd.merge(train2_p,age_occupation_item_feature2,on=['user_age_level','user_occupation_id','item_id'],how='left')
 # train2_p = pd.merge(train2_p,occupation_star_item_feature2,on=['user_occupation_id','user_star_level','item_id'],how='left')
-train2_p = pd.merge(train2_p,occupation_star_age_item_feature2,on=['user_occupation_id','user_star_level','user_age_level','item_id'],how='left')
+# train2_p = pd.merge(train2_p,occupation_star_age_item_feature2,on=['user_occupation_id','user_star_level','user_age_level','item_id'],how='left')
 # train2_p = pd.merge(train2_p,occupation_star_age_brand_feature2,on=['user_occupation_id','user_star_level','user_age_level','item_brand_id'],how='left')
 # train2_p = pd.merge(train2_p,occupation_star_age_price_feature2,on=['user_occupation_id','user_star_level','user_age_level','item_price_level'],how='left')
 # train2_p = pd.merge(train2_p,age_cate_feature2,on=['user_age_level','cate2'],how='left')
 train2_p = pd.merge(train2_p,star_cate_feature2,on=['user_star_level','cate2'],how='left')
 # train2_p = pd.merge(train2_p,star_age_cate_feature2,on=['user_star_level','user_age_level','cate2'],how='left')
 train2_p = pd.merge(train2_p,star_price_feature2,on=['user_star_level','item_price_level'],how='left')
+train2_p = pd.merge(train2_p,star_sale_feature2,on=['user_star_level','item_sales_level'],how='left')
+# train2_p = pd.merge(train2_p,star_sale_price_feature2,on=['user_star_level','item_sales_level','item_price_level'],how='left')
+# train2_p = pd.merge(train2_p,star_price_cate_feature2,on=['user_star_level','item_price_level','cate2'],how='left')
+# train2_p = pd.merge(train2_p,star_review_feature2,on=['user_star_level','shop_review_num_level'],how='left')
+# train2_p = pd.merge(train2_p,age_brand_feature2,on=['user_age_level','item_brand_id'],how='left')
+# train2_p = pd.merge(train2_p,star_brand_cate_feature2,on=['user_star_level','item_brand_id','cate2'],how='left')
 # train2_p = pd.merge(train2_p,star_shop_feature2,on=['user_star_level','shop_id'],how='left')
 # train2_p = pd.merge(train2_p,star_brand_feature2,on=['user_star_level','item_brand_id'],how='left')
 # train2_p = pd.merge(train2_p,occupation_cate_feature2,on=['user_occupation_id','cate2'],how='left')
@@ -475,6 +510,18 @@ gosa_cate_feature3 = pd.read_csv('data/gosa_cate_feature3.csv')
 gosa_cate_feature3.drop_duplicates(subset=['user_gender_id','user_occupation_id','user_star_level','user_age_level','cate2'],inplace=True)
 star_age_cate_feature3 = pd.read_csv('data/star_age_cate_feature3.csv')
 star_age_cate_feature3.drop_duplicates(subset=['user_star_level','user_age_level','cate2'],inplace=True)
+star_price_cate_feature3 = pd.read_csv('data/star_price_cate_feature3.csv')
+star_price_cate_feature3.drop_duplicates(subset=['user_star_level','item_price_level','cate2'],inplace=True)
+star_brand_cate_feature3 = pd.read_csv('data/star_brand_cate_feature3.csv')
+star_brand_cate_feature3.drop_duplicates(subset=['user_star_level','item_brand_id','cate2'],inplace=True)
+age_brand_feature3 = pd.read_csv('data/age_brand_feature3.csv')
+age_brand_feature3.drop_duplicates(subset=['user_age_level','item_brand_id'],inplace=True)
+star_review_feature3 = pd.read_csv('data/star_review_feature3.csv')
+star_review_feature3.drop_duplicates(subset=['user_star_level','shop_review_num_level'],inplace=True)
+star_sale_feature3 = pd.read_csv('data/star_sale_feature3.csv')
+star_sale_feature3.drop_duplicates(subset=['user_star_level','item_sales_level'],inplace=True)
+star_sale_price_feature3 = pd.read_csv('data/star_sale_price_feature3.csv')
+star_sale_price_feature3.drop_duplicates(subset=['user_star_level','item_sales_level','item_price_level'],inplace=True)
 
 other_user_feature3 = pd.read_csv('data/other_user_feature3.csv')
 other_user_feature3.drop_duplicates(inplace=True)
@@ -510,6 +557,8 @@ other_user_sales_feature3 = pd.read_csv('data/other_user_sales_feature3.csv')
 other_user_sales_feature3.drop_duplicates(inplace=True)
 other_shop_hour_feature3 = pd.read_csv('data/other_shop_hour_feature3.csv')
 other_shop_hour_feature3.drop_duplicates(inplace=True)
+
+
 print(train3_p.shape)
 train3_p = pd.merge(train3_p,user_feature3,on='user_id',how='left')
 train3_p = pd.merge(train3_p,shop_feature3,on='shop_id',how='left')
@@ -550,7 +599,7 @@ train3_p = pd.merge(train3_p,star_item_feature3,on=['user_star_level','item_id']
 train3_p = pd.merge(train3_p,age_star_item_feature3,on=['user_age_level','user_star_level','item_id'],how='left')
 # train1_p = pd.merge(train1_p,age_occupation_item_feature1,on=['user_age_level','user_occupation_id','item_id'],how='left')
 # train3_p = pd.merge(train3_p,occupation_star_item_feature3,on=['user_occupation_id','user_star_level','item_id'],how='left')
-train3_p = pd.merge(train3_p,occupation_star_age_item_feature3,on=['user_occupation_id','user_star_level','user_age_level','item_id'],how='left')
+# train3_p = pd.merge(train3_p,occupation_star_age_item_feature3,on=['user_occupation_id','user_star_level','user_age_level','item_id'],how='left')
 # train3_p = pd.merge(train3_p,occupation_star_age_brand_feature3,on=['user_occupation_id','user_star_level','user_age_level','item_brand_id'],how='left')
 # train3_p = pd.merge(train3_p,occupation_star_age_price_feature3,on=['user_occupation_id','user_star_level','user_age_level','item_price_level'],how='left')
 
@@ -561,6 +610,12 @@ train3_p = pd.merge(train3_p,occupation_star_age_item_feature3,on=['user_occupat
 train3_p = pd.merge(train3_p,star_cate_feature3,on=['user_star_level','cate2'],how='left')
 # train3_p = pd.merge(train3_p,star_age_cate_feature3,on=['user_star_level','user_age_level','cate2'],how='left')
 train3_p = pd.merge(train3_p,star_price_feature3,on=['user_star_level','item_price_level'],how='left')
+train3_p = pd.merge(train3_p,star_sale_feature3,on=['user_star_level','item_sales_level'],how='left')
+# train3_p = pd.merge(train3_p,star_sale_price_feature3,on=['user_star_level','item_sales_level','item_price_level'],how='left')
+# train3_p = pd.merge(train3_p,star_price_cate_feature3,on=['user_star_level','item_price_level','cate2'],how='left')
+# train3_p = pd.merge(train3_p,star_review_feature3,on=['user_star_level','shop_review_num_level'],how='left')
+# train3_p = pd.merge(train3_p,age_brand_feature3,on=['user_age_level','item_brand_id'],how='left')
+# train3_p = pd.merge(train3_p,star_brand_cate_feature3,on=['user_star_level','item_brand_id','cate2'],how='left')
 # train3_p = pd.merge(train3_p,star_shop_feature3,on=['user_star_level','shop_id'],how='left')
 # train3_p = pd.merge(train3_p,star_brand_feature3,on=['user_star_level','item_brand_id'],how='left')
 # train3_p = pd.merge(train3_p,occupation_cate_feature3,on=['user_occupation_id','cate2'],how='left')
@@ -581,16 +636,17 @@ drop_ele = [
             'instance_id','item_id','item_property_list','item_brand_id','item_pv_level','item_city_id',
             'user_id','user_occupation_id',
            'context_id','context_timestamp','predict_category_property','shop_id','cate2','cate3',
-           'user_click_min','user_click_mean'
-          ,'user_am_click','collected_user_tcrate',
+           'user_click_min','user_click_mean' ,'user_am_click',
+           'collected_user_tcrate',
            'user_brand_today_click','is_high_sale','user_price_crate',
+           'max_sale_hour', 'min_age',
            #    'user_age_level', 'user_star_level', 'shop_review_num_level',
            # 'shop_star_level',
             ]
 #  '2.27313E+16', '5.0966E+17', '1.96806E+18', '2.01198E+18', '2.43672E+18','user_occupation_id',
 #            '3.20367E+18', '4.87972E+18', '5.75569E+18', '5.79935E+18', '-1', '2004', '2005','ubefore',
 
-# ,'user_cate_buy', 'max_sale_hour', 'min_age', 'sale_am',, 'user_shop_click_buy_rate',
+# ,'user_cate_buy',  'sale_am',, 'user_shop_click_buy_rate',
 #              'user_shop_click_buy_rate.1',\
 #             'u_i_s_tclick_rate',
 #            'sales_user_tcrate', 'item_user_rate', 'user_shop_today', 'shop_user_rate',
@@ -653,7 +709,7 @@ model = xgb.train(params,train1_p,num_boost_round=3000,evals=watchlist,early_sto
 # train2_pre['pre'] = pre1
 # train2_pre.to_csv('train2_pre_xgb.csv',index=None)
 # watchlist = [(train12,'train')]
-# model = xgb.train(params,train12,num_boost_round=1450,evals=watchlist)
+# model = xgb.train(params,train12,num_boost_round=1600,evals=watchlist)
 # train3_pre['predicted_score'] = model.predict(train3_p)
 # train3_pre.to_csv('xgb_adv_pred.csv',sep=' ',index=None)
 
