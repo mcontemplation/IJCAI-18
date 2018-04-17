@@ -116,6 +116,11 @@ star_sale_feature1 = pd.read_csv('data/star_sale_feature1.csv')
 star_sale_feature1.drop_duplicates(subset=['user_star_level','item_sales_level'],inplace=True)
 star_sale_price_feature1 = pd.read_csv('data/star_sale_price_feature1.csv')
 star_sale_price_feature1.drop_duplicates(subset=['user_star_level','item_sales_level','item_price_level'],inplace=True)
+star_feature1 = pd.read_csv('data/star_feature1.csv')
+star_feature1.drop_duplicates(subset=['user_star_level'],inplace=True)
+age_feature1 = pd.read_csv('data/age_feature1.csv')
+age_feature1.drop_duplicates(subset=['user_age_level'],inplace=True)
+
 
 other_user_feature1 = pd.read_csv('data/other_user_feature1.csv')
 other_user_feature1.drop_duplicates(inplace=True)
@@ -202,6 +207,8 @@ train1_p = pd.merge(train1_p,star_cate_feature1,on=['user_star_level','cate2'],h
 # train1_p = pd.merge(train1_p,star_age_cate_feature1,on=['user_star_level','user_age_level','cate2'],how='left')
 train1_p = pd.merge(train1_p,star_price_feature1,on=['user_star_level','item_price_level'],how='left')
 train1_p = pd.merge(train1_p,star_sale_feature1,on=['user_star_level','item_sales_level'],how='left')
+train1_p = pd.merge(train1_p,star_feature1,on='user_star_level',how='left')
+train1_p = pd.merge(train1_p,age_feature1,on='user_age_level',how='left')
 # train1_p = pd.merge(train1_p,star_sale_price_feature1,on=['user_star_level','item_sales_level','item_price_level'],how='left')
 # train1_p = pd.merge(train1_p,star_price_cate_feature1,on=['user_star_level','item_price_level','cate2'],how='left')
 # train1_p = pd.merge(train1_p,star_review_feature1,on=['user_star_level','shop_review_num_level'],how='left')
@@ -320,6 +327,11 @@ star_sale_feature2 = pd.read_csv('data/star_sale_feature2.csv')
 star_sale_feature2.drop_duplicates(subset=['user_star_level','item_sales_level'],inplace=True)
 star_sale_price_feature2 = pd.read_csv('data/star_sale_price_feature2.csv')
 star_sale_price_feature2.drop_duplicates(subset=['user_star_level','item_sales_level','item_price_level'],inplace=True)
+star_feature2 = pd.read_csv('data/star_feature2.csv')
+star_feature2.drop_duplicates(subset=['user_star_level'],inplace=True)
+age_feature2 = pd.read_csv('data/age_feature2.csv')
+age_feature2.drop_duplicates(subset=['user_age_level'],inplace=True)
+
 
 other_user_feature2 = pd.read_csv('data/other_user_feature2.csv')
 other_user_feature2.drop_duplicates(inplace=True)
@@ -405,6 +417,8 @@ train2_p = pd.merge(train2_p,star_cate_feature2,on=['user_star_level','cate2'],h
 # train2_p = pd.merge(train2_p,star_age_cate_feature2,on=['user_star_level','user_age_level','cate2'],how='left')
 train2_p = pd.merge(train2_p,star_price_feature2,on=['user_star_level','item_price_level'],how='left')
 train2_p = pd.merge(train2_p,star_sale_feature2,on=['user_star_level','item_sales_level'],how='left')
+train2_p = pd.merge(train2_p,star_feature2,on='user_star_level',how='left')
+train2_p = pd.merge(train2_p,age_feature2,on='user_age_level',how='left')
 # train2_p = pd.merge(train2_p,star_sale_price_feature2,on=['user_star_level','item_sales_level','item_price_level'],how='left')
 # train2_p = pd.merge(train2_p,star_price_cate_feature2,on=['user_star_level','item_price_level','cate2'],how='left')
 # train2_p = pd.merge(train2_p,star_review_feature2,on=['user_star_level','shop_review_num_level'],how='left')
@@ -522,6 +536,10 @@ star_sale_feature3 = pd.read_csv('data/star_sale_feature3.csv')
 star_sale_feature3.drop_duplicates(subset=['user_star_level','item_sales_level'],inplace=True)
 star_sale_price_feature3 = pd.read_csv('data/star_sale_price_feature3.csv')
 star_sale_price_feature3.drop_duplicates(subset=['user_star_level','item_sales_level','item_price_level'],inplace=True)
+star_feature3 = pd.read_csv('data/star_feature3.csv')
+star_feature3.drop_duplicates(subset=['user_star_level'],inplace=True)
+age_feature3 = pd.read_csv('data/age_feature3.csv')
+age_feature3.drop_duplicates(subset=['user_age_level'],inplace=True)
 
 other_user_feature3 = pd.read_csv('data/other_user_feature3.csv')
 other_user_feature3.drop_duplicates(inplace=True)
@@ -611,6 +629,8 @@ train3_p = pd.merge(train3_p,star_cate_feature3,on=['user_star_level','cate2'],h
 # train3_p = pd.merge(train3_p,star_age_cate_feature3,on=['user_star_level','user_age_level','cate2'],how='left')
 train3_p = pd.merge(train3_p,star_price_feature3,on=['user_star_level','item_price_level'],how='left')
 train3_p = pd.merge(train3_p,star_sale_feature3,on=['user_star_level','item_sales_level'],how='left')
+train3_p = pd.merge(train3_p,star_feature3,on='user_star_level',how='left')
+train3_p = pd.merge(train3_p,age_feature3,on='user_age_level',how='left')
 # train3_p = pd.merge(train3_p,star_sale_price_feature3,on=['user_star_level','item_sales_level','item_price_level'],how='left')
 # train3_p = pd.merge(train3_p,star_price_cate_feature3,on=['user_star_level','item_price_level','cate2'],how='left')
 # train3_p = pd.merge(train3_p,star_review_feature3,on=['user_star_level','shop_review_num_level'],how='left')
@@ -640,7 +660,7 @@ drop_ele = [
            'collected_user_tcrate',
            'user_brand_today_click','is_high_sale','user_price_crate',
            'max_sale_hour', 'min_age',
-           'user_brand_rate','user_cate_buy','user_collected_brate',2011981573061447208,3203673979138763595,4879721024980945592
+           'user_brand_rate','user_cate_buy','user_collected_brate',2011981573061447208,
            #    'user_age_level', 'user_star_level', 'shop_review_num_level',
            # 'shop_star_level',
             ]
@@ -672,28 +692,28 @@ train12 = train12.drop('is_trade',axis=1)
 train12_gdbt = train12
 
 
-# train1_p = xgb.DMatrix(train1_p_x, label=train1_p_y)
-# train2_p = xgb.DMatrix(train2_p_x, label=train2_p_y)
-# train12 = xgb.DMatrix(train12,label=train12_y)
-# train3_p = xgb.DMatrix(train3_p)
-# params = {'booster': 'gbtree',
-#           'objective': 'binary:logistic',
-#           'scale_pos_weight': 1,
-#           'eval_metric': 'logloss',
-#           'gamma': 0.1,
-#           'min_child_weight': 1.0,
-#           'max_depth': 4,
-#           'lambda': 15,
-#           'subsample': 0.7,
-#           'colsample_bytree': 0.7,
-#           # 'colsample_bylevel': 0.7,
-#           'eta': 0.008,
-#           'tree_method': 'exact',
-#           'seed': 0,
-#           'nthread': 6
-#           }
-# watchlist = [(train1_p,'train'),(train2_p,'val')]
-# model = xgb.train(params,train1_p,num_boost_round=3000,evals=watchlist,early_stopping_rounds=100)
+train1_p = xgb.DMatrix(train1_p_x, label=train1_p_y)
+train2_p = xgb.DMatrix(train2_p_x, label=train2_p_y)
+train12 = xgb.DMatrix(train12,label=train12_y)
+train3_p = xgb.DMatrix(train3_p)
+params = {'booster': 'gbtree',
+          'objective': 'binary:logistic',
+          'scale_pos_weight': 1,
+          'eval_metric': 'logloss',
+          'gamma': 0.1,
+          'min_child_weight': 1.0,
+          'max_depth': 4,
+          'lambda': 15,
+          'subsample': 0.7,
+          'colsample_bytree': 0.7,
+          # 'colsample_bylevel': 0.7,
+          'eta': 0.008,
+          'tree_method': 'exact',
+          'seed': 0,
+          'nthread': 6
+          }
+watchlist = [(train1_p,'train'),(train2_p,'val')]
+model = xgb.train(params,train1_p,num_boost_round=3000,evals=watchlist,early_stopping_rounds=100)
 # # print(model.get_score(importance_type='gain'))
 # pre1 = model.predict(train2_p)
 # train2_pre = pd.DataFrame(index=None)
@@ -787,21 +807,21 @@ train12_gdbt = train12
 # print(log_loss(train2_p_y,pre))
 
 
-train1_p_x.fillna(0,inplace=True)
-train2_p_x.fillna(0,inplace=True)
-train12.fillna(0,inplace=True)
-train3_p.fillna(0,inplace=True)
-from sklearn.preprocessing import StandardScaler
-sc = StandardScaler()
-sc.fit(train1_p_x)
-train1_p_x = sc.transform(train1_p_x)
-train2_p_x = sc.transform(train2_p_x)
-train3_p = sc.transform(train3_p)
-from sklearn.linear_model import LogisticRegression
-lr = LogisticRegression(C=15,random_state=0)
-lr.fit(train1_p_x,train1_p_y)
-pre = lr.predict_proba(train2_p_x)
-print(log_loss(train2_p_y,pre))
+# train1_p_x.fillna(0,inplace=True)
+# train2_p_x.fillna(0,inplace=True)
+# train12.fillna(0,inplace=True)
+# train3_p.fillna(0,inplace=True)
+# from sklearn.preprocessing import StandardScaler
+# sc = StandardScaler()
+# sc.fit(train1_p_x)
+# train1_p_x = sc.transform(train1_p_x)
+# train2_p_x = sc.transform(train2_p_x)
+# train3_p = sc.transform(train3_p)
+# from sklearn.linear_model import LogisticRegression
+# lr = LogisticRegression(C=10,random_state=0)
+# lr.fit(train1_p_x,train1_p_y)
+# pre = lr.predict_proba(train2_p_x)
+# print(log_loss(train2_p_y,pre))
 # pre = pre[:,1]
 # lr = pd.DataFrame()
 # lr['pre'] = pre
