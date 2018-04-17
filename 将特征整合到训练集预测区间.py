@@ -640,6 +640,7 @@ drop_ele = [
            'collected_user_tcrate',
            'user_brand_today_click','is_high_sale','user_price_crate',
            'max_sale_hour', 'min_age',
+           'user_brand_rate','user_cate_buy','user_collected_brate',2011981573061447208,3203673979138763595,4879721024980945592
            #    'user_age_level', 'user_star_level', 'shop_review_num_level',
            # 'shop_star_level',
             ]
@@ -671,28 +672,29 @@ train12 = train12.drop('is_trade',axis=1)
 train12_gdbt = train12
 
 
-train1_p = xgb.DMatrix(train1_p_x, label=train1_p_y)
-train2_p = xgb.DMatrix(train2_p_x, label=train2_p_y)
-train12 = xgb.DMatrix(train12,label=train12_y)
-train3_p = xgb.DMatrix(train3_p)
-params = {'booster': 'gbtree',
-          'objective': 'binary:logistic',
-          'scale_pos_weight': 1,
-          'eval_metric': 'logloss',
-          'gamma': 0.1,
-          'min_child_weight': 1.0,
-          'max_depth': 4,
-          'lambda': 15,
-          'subsample': 0.7,
-          'colsample_bytree': 0.7,
-          # 'colsample_bylevel': 0.7,
-          'eta': 0.008,
-          'tree_method': 'exact',
-          'seed': 0,
-          'nthread': 6
-          }
-watchlist = [(train1_p,'train'),(train2_p,'val')]
-model = xgb.train(params,train1_p,num_boost_round=3000,evals=watchlist,early_stopping_rounds=100)
+# train1_p = xgb.DMatrix(train1_p_x, label=train1_p_y)
+# train2_p = xgb.DMatrix(train2_p_x, label=train2_p_y)
+# train12 = xgb.DMatrix(train12,label=train12_y)
+# train3_p = xgb.DMatrix(train3_p)
+# params = {'booster': 'gbtree',
+#           'objective': 'binary:logistic',
+#           'scale_pos_weight': 1,
+#           'eval_metric': 'logloss',
+#           'gamma': 0.1,
+#           'min_child_weight': 1.0,
+#           'max_depth': 4,
+#           'lambda': 15,
+#           'subsample': 0.7,
+#           'colsample_bytree': 0.7,
+#           # 'colsample_bylevel': 0.7,
+#           'eta': 0.008,
+#           'tree_method': 'exact',
+#           'seed': 0,
+#           'nthread': 6
+#           }
+# watchlist = [(train1_p,'train'),(train2_p,'val')]
+# model = xgb.train(params,train1_p,num_boost_round=3000,evals=watchlist,early_stopping_rounds=100)
+# # print(model.get_score(importance_type='gain'))
 # pre1 = model.predict(train2_p)
 # train2_pre = pd.DataFrame(index=None)
 # print(log_loss(train2_p_y,pre1))
@@ -709,7 +711,7 @@ model = xgb.train(params,train1_p,num_boost_round=3000,evals=watchlist,early_sto
 # train2_pre['pre'] = pre1
 # train2_pre.to_csv('train2_pre_xgb.csv',index=None)
 # watchlist = [(train12,'train')]
-# model = xgb.train(params,train12,num_boost_round=1600,evals=watchlist)
+# model = xgb.train(params,train12,num_boost_round=1550,evals=watchlist)
 # train3_pre['predicted_score'] = model.predict(train3_p)
 # train3_pre.to_csv('xgb_adv_pred.csv',sep=' ',index=None)
 
@@ -785,6 +787,30 @@ model = xgb.train(params,train1_p,num_boost_round=3000,evals=watchlist,early_sto
 # print(log_loss(train2_p_y,pre))
 
 
+train1_p_x.fillna(0,inplace=True)
+train2_p_x.fillna(0,inplace=True)
+train12.fillna(0,inplace=True)
+train3_p.fillna(0,inplace=True)
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+sc.fit(train1_p_x)
+train1_p_x = sc.transform(train1_p_x)
+train2_p_x = sc.transform(train2_p_x)
+train3_p = sc.transform(train3_p)
+from sklearn.linear_model import LogisticRegression
+lr = LogisticRegression(C=15,random_state=0)
+lr.fit(train1_p_x,train1_p_y)
+pre = lr.predict_proba(train2_p_x)
+print(log_loss(train2_p_y,pre))
+# pre = pre[:,1]
+# lr = pd.DataFrame()
+# lr['pre'] = pre
+# lr.to_csv('train2_pre_lr.csv',index=None)
+# lr = pd.read_csv('train2_pre_lr.csv')
+# xgbd = pd.read_csv('train2_pre_xgb.csv')
+# print(log_loss(train2_p_y,xgbd['pre']))
+# pre = 0.5*xgbd['pre']+0.5*lr['pre']
+# print(log_loss(train2_p_y,pre))
 
 
 

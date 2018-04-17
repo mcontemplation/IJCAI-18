@@ -124,10 +124,33 @@ train1_p = train[(train.context_timestamp>='20180923000000')&(train.context_time
 
 train3_f = train[(train.context_timestamp>='20180920000000')&(train.context_timestamp<='20180924240000')]
 train3_p = test
-
+t_18 = train[(train.context_timestamp>='20180918000000')&(train.context_timestamp<='20180918240000')]
+t_19 = train[(train.context_timestamp>='20180919000000')&(train.context_timestamp<='20180919240000')]
+t_20 = train[(train.context_timestamp>='20180920000000')&(train.context_timestamp<='20180920240000')]
+t_21 = train[(train.context_timestamp>='20180921000000')&(train.context_timestamp<='20180921240000')]
+t_22 = train[(train.context_timestamp>='20180922000000')&(train.context_timestamp<='20180922240000')]
+t_23 = train[(train.context_timestamp>='20180923000000')&(train.context_timestamp<='20180923240000')]
+t_24 = train[(train.context_timestamp>='20180924000000')&(train.context_timestamp<='20180924240000')]
+print(t_18.is_trade.sum())
+print(t_18.shape[0])
+print(t_19.is_trade.sum())
+print(t_19.shape[0])
+print(t_20.is_trade.sum())
+print(t_20.shape[0])
+print(t_21.is_trade.sum())
+print(t_21.shape[0])
+print(t_22.is_trade.sum())
+print(t_22.shape[0])
+print(t_23.is_trade.sum())
+print(t_23.shape[0])
+print(t_24.is_trade.sum())
+print(t_24.shape[0])
+print(test.shape[0])
+print(train[train.user_star_level==-1]['is_trade'].sum())
 train1_f.to_csv('data/train1_f.csv',index=None)
 train1_p.to_csv('data/train1_p.csv',index=None)
 train2_f.to_csv('data/train2_f.csv',index=None)
 train2_p.to_csv('data/train2_p.csv',index=None)
 train3_f.to_csv('data/train3_f.csv',index=None)
 train3_p.to_csv('data/train3_p.csv',index=None)
+train.to_csv('data/traint.csv',index=None)
