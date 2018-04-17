@@ -14,6 +14,30 @@ from datetime import date
 from matplotlib import pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 
+def ustar1(x):
+    if(x==3000|x==3001|x==3008):
+        return 'us1'
+    if((x>=3002)&(x<=3007)):
+        return 'us2'
+    return 'us3'
+def uage1(x):
+    if(x==1001|x==1000|x==1007):
+        return 'ua1'
+    if(x==1002|x==1005|x==1006):
+        return 'ua2'
+    return 'ua3'
+def ipri1(x):
+    if(x==0|x==1|x==2|x==3|x==9|x==10|x==11):
+        return 'ip1'
+    if(x==4|x==5|x==8):
+        return 'ip2'
+    return 'ip3'
+def isale1(x):
+    if(x==7.0|x==8.0|x==9.0|x==10.0|x==15.0|x==16.0):
+        return 'is2'
+    if(x==11.0|x==12.0|x==13.0|x==14.0):
+        return 'is3'
+    return 'is1'
 
 train1_p = pd.read_csv('data/train1_p.csv')
 
@@ -23,7 +47,8 @@ train1_p = pd.concat([train1_p,cate],axis=1)
 user_occupation_id = pd.get_dummies(train1_p['user_occupation_id'])
 train1_p = pd.concat([train1_p,user_occupation_id],axis=1)
 
-
+user_gender_id = pd.get_dummies(train1_p['user_gender_id'])
+train1_p = pd.concat([train1_p,user_gender_id],axis=1)
 
 
 user_feature1 = pd.read_csv('data/user_feature1.csv')
@@ -235,7 +260,8 @@ train2_p = pd.concat([train2_p,cate],axis=1)
 user_occupation_id = pd.get_dummies(train2_p['user_occupation_id'])
 train2_p = pd.concat([train2_p,user_occupation_id],axis=1)
 
-
+user_gender_id = pd.get_dummies(train2_p['user_gender_id'])
+train2_p = pd.concat([train2_p,user_gender_id],axis=1)
 
 user_feature2 = pd.read_csv('data/user_feature2.csv')
 user_feature2.drop_duplicates(inplace=True)
@@ -445,6 +471,8 @@ train3_p = pd.concat([train3_p,cate],axis=1)
 user_occupation_id = pd.get_dummies(train3_p['user_occupation_id'])
 train3_p = pd.concat([train3_p,user_occupation_id],axis=1)
 
+user_gender_id = pd.get_dummies(train3_p['user_gender_id'])
+train3_p = pd.concat([train3_p,user_gender_id],axis=1)
 
 user_feature3 = pd.read_csv('data/user_feature3.csv')
 user_feature3.drop_duplicates(inplace=True)
@@ -650,7 +678,49 @@ print(train3_p.shape)
 
 train3_pre = train3_p[['instance_id']]
 # train2_pre = train2_p[['instance_id']]
+train1_p['ustar'] = train1_p['user_star_level'].apply(ustar1)
+train1_p['uage'] = train1_p['user_age_level'].apply(uage1)
+train1_p['iprice'] = train1_p['item_price_level'].apply(ipri1)
+# train1_p['isale'] = train1_p['item_sales_level'].astype(int).apply(isale)
+ustar = pd.get_dummies(train1_p['ustar'])
+train1_p = pd.concat([train1_p,ustar],axis=1)
+uage = pd.get_dummies(train1_p['uage'])
+train1_p = pd.concat([train1_p,uage],axis=1)
+iprice = pd.get_dummies(train1_p['iprice'])
+# print(iprice)
+train1_p = pd.concat([train1_p,iprice],axis=1)
+# isale = pd.get_dummies(train1_p['isale'])
+# train1_p = pd.concat([train1_p,isale],axis=1)
 
+
+train2_p['ustar'] = train2_p['user_star_level'].apply(ustar1)
+train2_p['uage'] = train2_p['user_age_level'].apply(uage1)
+train2_p['iprice'] = train2_p['item_price_level'].apply(ipri1)
+# train2_p['isale'] = train2_p['item_sales_level'].astype(int).apply(isale)
+ustar = pd.get_dummies(train2_p['ustar'])
+train2_p = pd.concat([train2_p,ustar],axis=1)
+uage = pd.get_dummies(train2_p['uage'])
+train2_p = pd.concat([train2_p,uage],axis=1)
+iprice = pd.get_dummies(train2_p['iprice'])
+# print(iprice)
+train2_p = pd.concat([train2_p,iprice],axis=1)
+# isale = pd.get_dummies(train2_p['isale'])
+# train2_p = pd.concat([train2_p,isale],axis=1)
+
+
+train3_p['ustar'] = train3_p['user_star_level'].apply(ustar1)
+train3_p['uage'] = train3_p['user_age_level'].apply(uage1)
+train3_p['iprice'] = train3_p['item_price_level'].apply(ipri1)
+# train3_p['isale'] = train3_p['item_sales_level'].astype(int).apply(isale)
+ustar = pd.get_dummies(train3_p['ustar'])
+train3_p = pd.concat([train3_p,ustar],axis=1)
+uage = pd.get_dummies(train3_p['uage'])
+train3_p = pd.concat([train3_p,uage],axis=1)
+iprice = pd.get_dummies(train3_p['iprice'])
+# print(iprice)
+train3_p = pd.concat([train3_p,iprice],axis=1)
+# isale = pd.get_dummies(train3_p['isale'])
+# train3_p = pd.concat([train3_p,isale],axis=1)
 
 drop_ele = [
             'instance_id','item_id','item_property_list','item_brand_id','item_pv_level','item_city_id',
@@ -661,7 +731,8 @@ drop_ele = [
            'user_brand_today_click','is_high_sale','user_price_crate',
            'max_sale_hour', 'min_age',
            'user_brand_rate','user_cate_buy','user_collected_brate',2011981573061447208,
-           #    'user_age_level', 'user_star_level', 'shop_review_num_level',
+           'ustar','uage','iprice','user_star_level','user_age_level','item_price_level',-1,'user_cate_brate',
+           #    'user_age_level', 'user_star_level',
            # 'shop_star_level',
             ]
 #  '2.27313E+16', '5.0966E+17', '1.96806E+18', '2.01198E+18', '2.43672E+18','user_occupation_id',
@@ -714,7 +785,7 @@ params = {'booster': 'gbtree',
           }
 watchlist = [(train1_p,'train'),(train2_p,'val')]
 model = xgb.train(params,train1_p,num_boost_round=3000,evals=watchlist,early_stopping_rounds=100)
-# # print(model.get_score(importance_type='gain'))
+print(model.get_score(importance_type='gain'))
 # pre1 = model.predict(train2_p)
 # train2_pre = pd.DataFrame(index=None)
 # print(log_loss(train2_p_y,pre1))

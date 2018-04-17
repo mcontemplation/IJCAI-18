@@ -211,7 +211,6 @@ t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
 t = t.rename(columns={'is_trade':'shop_cate2_btotal'})
 store = pd.merge(store,t,on=['shop_id'],how='left')
 
-store[['shop_click_buy_rate','shop_click_buy_total','shop_click_total','min_sale_hour','max_sale_hour','mean_age','max_age',
+store[['shop_click_buy_rate','shop_click_buy_total','shop_click_total','min_sale_hour','max_sale_hour','min_age','mean_age','max_age',
        'sale_am','sale_pm','shop_cate2_btotal','shop_id']].to_csv('data/shop_feature3.csv',index=None)
 # ,'shop_difuser_total'
-# ,'min_age'

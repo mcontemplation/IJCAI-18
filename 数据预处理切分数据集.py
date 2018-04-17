@@ -10,6 +10,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 train = pd.read_table('data/round1_ijcai_18_train_20180301.txt',delim_whitespace=True)
 test = pd.read_table('data/round1_ijcai_18_test_a_20180301.txt',delim_whitespace=True)
+
 train.user_gender_id = train.user_gender_id.replace(-1,0)
 test.user_gender_id = test.user_gender_id.replace(-1,0)
 
@@ -154,3 +155,5 @@ train2_p.to_csv('data/train2_p.csv',index=None)
 train3_f.to_csv('data/train3_f.csv',index=None)
 train3_p.to_csv('data/train3_p.csv',index=None)
 train.to_csv('data/traint.csv',index=None)
+
+
