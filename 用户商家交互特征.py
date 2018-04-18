@@ -39,46 +39,6 @@ user_shop['shop_user_click_buy_rate']=user_shop['user_shop_click_buy_total']/use
 
 user_shop[['user_shop_click_buy_rate','user_shop_click_buy_total','user_shop_click_total','user_shop_click_buy_rate','shop_user_click_buy_rate','user_id','shop_id']].to_csv('data/user_shop_feature1.csv',index=None)
 
-# 该星级用户在该店铺点击数目
-t = user_shop[['user_star_level','shop_id']]
-t['star_shop_click'] = 1
-t = t.groupby(['user_star_level','shop_id']).agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_id'],how='left')
-# 购买
-t = user_shop[['user_star_level','shop_id','is_trade']]
-t = t.groupby(['user_star_level','shop_id']).agg('sum').reset_index()
-t = t.rename(columns={'is_trade':'star_shop_buy'})
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_id'],how='left')
-# lv
-user_shop['star_shop_rate'] = user_shop['star_shop_buy']/user_shop['star_shop_click']
-user_shop[['star_shop_click','star_shop_buy','user_star_level','shop_id']].to_csv('data/star_shop_feature1.csv',index=None)
-# 该lei用户在该店铺点击数目
-t = user_shop[['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']]
-t['gosa_shop_click'] = 1
-t = t.groupby(['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']).agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id'],how='left')
-# 购买
-t = user_shop[['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id','is_trade']]
-t = t.groupby(['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']).agg('sum').reset_index()
-t = t.rename(columns={'is_trade':'gosa_shop_buy'})
-user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id'],how='left')
-# lv
-user_shop['gosa_shop_rate'] = user_shop['gosa_shop_buy']/user_shop['gosa_shop_click']
-user_shop[['gosa_shop_click','gosa_shop_buy','user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']].to_csv('data/gosa_shop_feature1.csv',index=None)
-
-# 该星级点击该评论次数
-t = user_shop[['user_star_level','shop_review_num_level']]
-t['star_review_click_total'] = 1
-t = t.groupby(['user_star_level','shop_review_num_level'])['star_review_click_total'].agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
-# 用户购买该店铺次数
-t = user_shop[['user_star_level','shop_review_num_level','is_trade']]
-t = t.groupby(['user_star_level','shop_review_num_level']).agg('sum').reset_index()
-t.rename(columns={'is_trade':'star_review_click_buy_total'},inplace=True)
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
-# 用户购买该店铺率
-user_shop['star_review_click_buy_rate'] = user_shop['star_review_click_buy_total']/user_shop['star_review_click_total']
-user_shop[['star_review_click_total','star_review_click_buy_total','star_review_click_buy_rate','user_star_level','shop_review_num_level']].to_csv('data/star_review_feature1.csv',index=None)
 
 
 # 从训练集二中获取用户店铺交互特征
@@ -111,47 +71,6 @@ user_shop['user_shop_click_buy_rate']=user_shop['user_shop_click_buy_total']/use
 user_shop['shop_user_click_buy_rate']=user_shop['user_shop_click_buy_total']/user_shop['user_click_buy_total']
 
 user_shop[['user_shop_click_buy_rate','user_shop_click_buy_total','user_shop_click_total','user_shop_click_buy_rate','shop_user_click_buy_rate','user_id','shop_id']].to_csv('data/user_shop_feature2.csv',index=None)
-# 该星级用户在该店铺点击数目
-t = user_shop[['user_star_level','shop_id']]
-t['star_shop_click'] = 1
-t = t.groupby(['user_star_level','shop_id']).agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_id'],how='left')
-# 购买
-t = user_shop[['user_star_level','shop_id','is_trade']]
-t = t.groupby(['user_star_level','shop_id']).agg('sum').reset_index()
-t = t.rename(columns={'is_trade':'star_shop_buy'})
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_id'],how='left')
-# lv
-user_shop['star_shop_rate'] = user_shop['star_shop_buy']/user_shop['star_shop_click']
-user_shop[['star_shop_click','star_shop_buy','user_star_level','shop_id']].to_csv('data/star_shop_feature2.csv',index=None)
-# 该lei用户在该店铺点击数目
-t = user_shop[['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']]
-t['gosa_shop_click'] = 1
-t = t.groupby(['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']).agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id'],how='left')
-# 购买
-t = user_shop[['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id','is_trade']]
-t = t.groupby(['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']).agg('sum').reset_index()
-t = t.rename(columns={'is_trade':'gosa_shop_buy'})
-user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id'],how='left')
-# lv
-user_shop['gosa_shop_rate'] = user_shop['gosa_shop_buy']/user_shop['gosa_shop_click']
-user_shop[['gosa_shop_click','gosa_shop_buy','user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']].to_csv('data/gosa_shop_feature2.csv',index=None)
-
-# 该星级点击该评论次数
-t = user_shop[['user_star_level','shop_review_num_level']]
-t['star_review_click_total'] = 1
-t = t.groupby(['user_star_level','shop_review_num_level'])['star_review_click_total'].agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
-# 用户购买该店铺次数
-t = user_shop[['user_star_level','shop_review_num_level','is_trade']]
-t = t.groupby(['user_star_level','shop_review_num_level']).agg('sum').reset_index()
-t.rename(columns={'is_trade':'star_review_click_buy_total'},inplace=True)
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
-# 用户购买该店铺率
-user_shop['star_review_click_buy_rate'] = user_shop['star_review_click_buy_total']/user_shop['star_review_click_total']
-user_shop[['star_review_click_total','star_review_click_buy_total','star_review_click_buy_rate','user_star_level','shop_review_num_level']].to_csv('data/star_review_feature2.csv',index=None)
-
 
 
 
@@ -185,44 +104,7 @@ user_shop['user_shop_click_buy_rate']=user_shop['user_shop_click_buy_total']/use
 user_shop['shop_user_click_buy_rate']=user_shop['user_shop_click_buy_total']/user_shop['user_click_buy_total']
 
 user_shop[['user_shop_click_buy_rate','user_shop_click_buy_total','user_shop_click_total','user_shop_click_buy_rate','shop_user_click_buy_rate','user_id','shop_id']].to_csv('data/user_shop_feature3.csv',index=None)
-# 该星级用户在该店铺点击数目
-t = user_shop[['user_star_level','shop_id']]
-t['star_shop_click'] = 1
-t = t.groupby(['user_star_level','shop_id']).agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_id'],how='left')
-# 购买
-t = user_shop[['user_star_level','shop_id','is_trade']]
-t = t.groupby(['user_star_level','shop_id']).agg('sum').reset_index()
-t = t.rename(columns={'is_trade':'star_shop_buy'})
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_id'],how='left')
-# lv
-user_shop['star_shop_rate'] = user_shop['star_shop_buy']/user_shop['star_shop_click']
-user_shop[['star_shop_click','star_shop_buy','user_star_level','shop_id']].to_csv('data/star_shop_feature3.csv',index=None)
 
-# 该lei用户在该店铺点击数目
-t = user_shop[['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']]
-t['gosa_shop_click'] = 1
-t = t.groupby(['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']).agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id'],how='left')
-# 购买
-t = user_shop[['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id','is_trade']]
-t = t.groupby(['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']).agg('sum').reset_index()
-t = t.rename(columns={'is_trade':'gosa_shop_buy'})
-user_shop = pd.merge(user_shop,t,on=['user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id'],how='left')
-# lv
-user_shop['gosa_shop_rate'] = user_shop['gosa_shop_buy']/user_shop['gosa_shop_click']
-user_shop[['gosa_shop_click','gosa_shop_buy','user_star_level','user_gender_id','user_occupation_id','user_age_level','shop_id']].to_csv('data/gosa_shop_feature3.csv',index=None)
 
-# 该星级点击该评论次数
-t = user_shop[['user_star_level','shop_review_num_level']]
-t['star_review_click_total'] = 1
-t = t.groupby(['user_star_level','shop_review_num_level'])['star_review_click_total'].agg('sum').reset_index()
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
-# 用户购买该店铺次数
-t = user_shop[['user_star_level','shop_review_num_level','is_trade']]
-t = t.groupby(['user_star_level','shop_review_num_level']).agg('sum').reset_index()
-t.rename(columns={'is_trade':'star_review_click_buy_total'},inplace=True)
-user_shop = pd.merge(user_shop,t,on=['user_star_level','shop_review_num_level'],how='left')
-# 用户购买该店铺率
-user_shop['star_review_click_buy_rate'] = user_shop['star_review_click_buy_total']/user_shop['star_review_click_total']
-user_shop[['star_review_click_total','star_review_click_buy_total','star_review_click_buy_rate','user_star_level','shop_review_num_level']].to_csv('data/star_review_feature3.csv',index=None)
+
+

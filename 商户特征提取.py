@@ -58,13 +58,6 @@ t2 = t2.groupby('shop_id').agg('sum').reset_index()
 store = pd.merge(store,t1,on='shop_id',how='left')
 store = pd.merge(store,t2,on='shop_id',how='left')
 
-# 该店铺被多少不同用户购买
-t = store[['user_id','shop_id','is_trade']]
-t = t[t.is_trade==1]
-t = t.drop_duplicates(subset=['user_id','shop_id'])
-t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
-t = t.rename(columns={'is_trade':'shop_difuser_total'})
-store = pd.merge(store,t,on=['shop_id'],how='left')
 # 该店铺售卖种类
 t = store[['shop_id','cate2','is_trade']]
 t = t[t.is_trade==1]
@@ -128,13 +121,6 @@ t2 = t2.groupby('shop_id').agg('sum').reset_index()
 store = pd.merge(store,t1,on='shop_id',how='left')
 store = pd.merge(store,t2,on='shop_id',how='left')
 
-# 该店铺被多少不同用户购买
-t = store[['user_id','shop_id','is_trade']]
-t = t[t.is_trade==1]
-t = t.drop_duplicates(subset=['user_id','shop_id'])
-t = t.groupby(['shop_id'])['is_trade'].agg('sum').reset_index()
-t = t.rename(columns={'is_trade':'shop_difuser_total'})
-store = pd.merge(store,t,on=['shop_id'],how='left')
 # 该店铺售卖种类
 t = store[['shop_id','cate2','is_trade']]
 t = t[t.is_trade==1]
