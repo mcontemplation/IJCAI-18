@@ -237,3 +237,158 @@ train[['star_sale_rate','user_star_level','item_sales_level']].to_csv('data/star
 
 
 
+
+
+# 训练集4
+train = pd.read_csv('data/train4_f.csv')
+u = pd.read_csv('data/user_feature4.csv')
+#用户点击该价格等级的商品数量
+t = train[['user_id','item_price_level']]
+t['user_price_ctotal'] = 1
+t = t.groupby(['user_id','item_price_level']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_id','item_price_level'],how='left')
+# 用户购买该价格等级商品的数量
+t = train[['user_id','item_price_level','is_trade']]
+t = t.groupby(['user_id','item_price_level']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'user_price_btotal'})
+train = pd.merge(train,t,on=['user_id','item_price_level'],how='left')
+# 用户购买该价格等级商品占用户购买比
+u = u[['user_id','user_click_total','user_click_buy_total']]
+u = u.drop_duplicates(subset='user_id')
+train = pd.merge(train,u,on='user_id',how='left')
+train['user_price_crate'] = train['user_price_ctotal']/train['user_click_total']
+train['user_price_brate'] = train['user_price_btotal']/train['user_click_buy_total']
+train[['user_price_ctotal','user_price_btotal','user_price_crate','user_price_brate','user_id','item_price_level']].to_csv('data/user_price_feature4.csv',index=None)
+
+#用户点击该收藏等级的商品数量
+train = pd.read_csv('data/train4_f.csv')
+u = pd.read_csv('data/user_feature4.csv')
+t = train[['user_id','item_collected_level']]
+t['user_collected_ctotal'] = 1
+t = t.groupby(['user_id','item_collected_level']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_id','item_collected_level'],how='left')
+# 用户购买该价格等级商品的数量
+t = train[['user_id','item_collected_level','is_trade']]
+t = t.groupby(['user_id','item_collected_level']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'user_collected_btotal'})
+train = pd.merge(train,t,on=['user_id','item_collected_level'],how='left')
+# 用户购买该价格等级商品占用户购买比
+u = u[['user_id','user_click_total','user_click_buy_total']]
+u = u.drop_duplicates(subset='user_id')
+train = pd.merge(train,u,on=['user_id'],how='left')
+# print(train[['user_collected_ctotal']])
+train['user_collected_crate'] = train['user_collected_ctotal']/train['user_click_total']
+train['user_collected_brate'] = train['user_collected_btotal']/train['user_click_buy_total']
+train[['user_collected_ctotal','user_collected_crate','user_collected_brate','user_id','item_collected_level']].to_csv('data/user_collected_feature4.csv',index=None)
+# 'user_collected_btotal'
+
+# 该星级
+# 该年龄点击该类目次数
+t = train[['user_star_level','item_price_level']]
+t['star_price_click'] = 1
+t = t.groupby(['user_star_level','item_price_level']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_star_level','item_price_level'],how='left')
+# 该年龄购买该类目次数
+t = train[['user_star_level','item_price_level','is_trade']]
+t = t.groupby(['user_star_level','item_price_level']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'star_price_buy'})
+train = pd.merge(train,t,on=['user_star_level','item_price_level'],how='left')
+# 该年龄购买该类别率
+train['star_price_rate'] = train['star_price_buy']/train['star_price_click']
+
+train[['star_price_rate','user_star_level','item_price_level']].to_csv('data/star_price_feature4.csv',index=None)
+
+
+# 该星级与商品销量
+# 该年龄点击该类目次数
+t = train[['user_star_level','item_sales_level']]
+t['star_sale_click'] = 1
+t = t.groupby(['user_star_level','item_sales_level']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_star_level','item_sales_level'],how='left')
+# 该年龄购买该类目次数
+t = train[['user_star_level','item_sales_level','is_trade']]
+t = t.groupby(['user_star_level','item_sales_level']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'star_sale_buy'})
+train = pd.merge(train,t,on=['user_star_level','item_sales_level'],how='left')
+# 该年龄购买该类别率
+train['star_sale_rate'] = train['star_sale_buy']/train['star_sale_click']
+train[['star_sale_rate','user_star_level','item_sales_level']].to_csv('data/star_sale_feature4.csv',index=None)
+
+
+
+
+# # 训练集5
+# train = pd.read_csv('data/train5_f.csv')
+# u = pd.read_csv('data/user_feature5.csv')
+# #用户点击该价格等级的商品数量
+# t = train[['user_id','item_price_level']]
+# t['user_price_ctotal'] = 1
+# t = t.groupby(['user_id','item_price_level']).agg('sum').reset_index()
+# train = pd.merge(train,t,on=['user_id','item_price_level'],how='left')
+# # 用户购买该价格等级商品的数量
+# t = train[['user_id','item_price_level','is_trade']]
+# t = t.groupby(['user_id','item_price_level']).agg('sum').reset_index()
+# t = t.rename(columns={'is_trade':'user_price_btotal'})
+# train = pd.merge(train,t,on=['user_id','item_price_level'],how='left')
+# # 用户购买该价格等级商品占用户购买比
+# u = u[['user_id','user_click_total','user_click_buy_total']]
+# u = u.drop_duplicates(subset='user_id')
+# train = pd.merge(train,u,on='user_id',how='left')
+# train['user_price_crate'] = train['user_price_ctotal']/train['user_click_total']
+# train['user_price_brate'] = train['user_price_btotal']/train['user_click_buy_total']
+# train[['user_price_ctotal','user_price_btotal','user_price_crate','user_price_brate','user_id','item_price_level']].to_csv('data/user_price_feature5.csv',index=None)
+#
+# #用户点击该收藏等级的商品数量
+# train = pd.read_csv('data/train5_f.csv')
+# u = pd.read_csv('data/user_feature5.csv')
+# t = train[['user_id','item_collected_level']]
+# t['user_collected_ctotal'] = 1
+# t = t.groupby(['user_id','item_collected_level']).agg('sum').reset_index()
+# train = pd.merge(train,t,on=['user_id','item_collected_level'],how='left')
+# # 用户购买该价格等级商品的数量
+# t = train[['user_id','item_collected_level','is_trade']]
+# t = t.groupby(['user_id','item_collected_level']).agg('sum').reset_index()
+# t = t.rename(columns={'is_trade':'user_collected_btotal'})
+# train = pd.merge(train,t,on=['user_id','item_collected_level'],how='left')
+# # 用户购买该价格等级商品占用户购买比
+# u = u[['user_id','user_click_total','user_click_buy_total']]
+# u = u.drop_duplicates(subset='user_id')
+# train = pd.merge(train,u,on=['user_id'],how='left')
+# # print(train[['user_collected_ctotal']])
+# train['user_collected_crate'] = train['user_collected_ctotal']/train['user_click_total']
+# train['user_collected_brate'] = train['user_collected_btotal']/train['user_click_buy_total']
+# train[['user_collected_ctotal','user_collected_crate','user_collected_brate','user_id','item_collected_level']].to_csv('data/user_collected_feature5.csv',index=None)
+# # 'user_collected_btotal'
+#
+# # 该星级
+# # 该年龄点击该类目次数
+# t = train[['user_star_level','item_price_level']]
+# t['star_price_click'] = 1
+# t = t.groupby(['user_star_level','item_price_level']).agg('sum').reset_index()
+# train = pd.merge(train,t,on=['user_star_level','item_price_level'],how='left')
+# # 该年龄购买该类目次数
+# t = train[['user_star_level','item_price_level','is_trade']]
+# t = t.groupby(['user_star_level','item_price_level']).agg('sum').reset_index()
+# t = t.rename(columns={'is_trade':'star_price_buy'})
+# train = pd.merge(train,t,on=['user_star_level','item_price_level'],how='left')
+# # 该年龄购买该类别率
+# train['star_price_rate'] = train['star_price_buy']/train['star_price_click']
+#
+# train[['star_price_rate','user_star_level','item_price_level']].to_csv('data/star_price_feature5.csv',index=None)
+#
+#
+# # 该星级与商品销量
+# # 该年龄点击该类目次数
+# t = train[['user_star_level','item_sales_level']]
+# t['star_sale_click'] = 1
+# t = t.groupby(['user_star_level','item_sales_level']).agg('sum').reset_index()
+# train = pd.merge(train,t,on=['user_star_level','item_sales_level'],how='left')
+# # 该年龄购买该类目次数
+# t = train[['user_star_level','item_sales_level','is_trade']]
+# t = t.groupby(['user_star_level','item_sales_level']).agg('sum').reset_index()
+# t = t.rename(columns={'is_trade':'star_sale_buy'})
+# train = pd.merge(train,t,on=['user_star_level','item_sales_level'],how='left')
+# # 该年龄购买该类别率
+# train['star_sale_rate'] = train['star_sale_buy']/train['star_sale_click']
+# train[['star_sale_rate','user_star_level','item_sales_level']].to_csv('data/star_sale_feature5.csv',index=None)
+

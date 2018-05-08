@@ -7,63 +7,57 @@ import time
 from datetime import date
 from matplotlib import pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
+import gc
 
-train = pd.read_table('data/round1_ijcai_18_train_20180301.txt',delim_whitespace=True)
-test = pd.read_table('data/round1_ijcai_18_test_a_20180301.txt',delim_whitespace=True)
+train = pd.read_table('C:/Users/37798/Desktop/[update] round2_ijcai_18_train_20180425/round2_train.txt',delim_whitespace=True)
+test = pd.read_table('C:/Users/37798/Desktop/round2_ijcai_18_test_a_20180425/round2_ijcai_18_test_a_20180425.txt',delim_whitespace=True)
 
 train.user_gender_id = train.user_gender_id.replace(-1,0)
 test.user_gender_id = test.user_gender_id.replace(-1,0)
-print(train[train.user_gender_id==-1].shape[0])
 
-train.item_brand_id = train.item_brand_id.replace(-1,train['item_brand_id'].mode())
-test.item_brand_id = test.item_brand_id.replace(-1,test['item_brand_id'].mode())
-train = train[train.item_brand_id!=-1]
-test = test[test.item_brand_id!=-1]
-print(train[train.item_brand_id==-1].shape[0])
 
-train.item_city_id = train.item_city_id.replace(-1,train['item_city_id'].mode())
-test.item_city_id = test.item_city_id.replace(-1,test['item_city_id'].mode())
-train = train[train.item_city_id!=-1]
-test = test[test.item_city_id!=-1]
-print(train[train.item_city_id==-1].shape[0])
+train.item_brand_id = train.item_brand_id.replace(-1,int(train['item_brand_id'].mode()))
+test.item_brand_id = test.item_brand_id.replace(-1,int(test['item_brand_id'].mode()))
+
+
+
+train.item_city_id = train.item_city_id.replace(-1,int(train['item_city_id'].mode()))
+test.item_city_id = test.item_city_id.replace(-1,int(test['item_city_id'].mode()))
+
 
 train.loc[train.item_sales_level==-1,'item_sales_level']=pd.DataFrame(train[train['item_sales_level'].isin([-1])]['item_collected_level'],columns=['item_collected_level']).reset_index()['item_collected_level']
 test.loc[test.item_sales_level==-1,'item_sales_level']=pd.DataFrame(test[test['item_sales_level'].isin([-1])]['item_collected_level'],columns=['item_collected_level']).reset_index()['item_collected_level']
-print(train[train.item_sales_level==-1].shape[0])
 
-train.user_gender_id = train.user_gender_id.replace(-1,train['user_gender_id'].mode())
-test.user_gender_id = test.user_gender_id.replace(-1,test['user_gender_id'].mode())
-print(train[train.user_gender_id==-1].shape[0])
 
-train.user_age_level = train.user_age_level.replace(-1,train['user_age_level'].mode())
-test.user_age_level = test.user_age_level.replace(-1,test['user_age_level'].mode())
-train = train[train.user_age_level!=-1]
-test = test[test.user_age_level!=-1]
-print(train[train.user_age_level==-1].shape[0])
+train.user_gender_id = train.user_gender_id.replace(-1,int(train['user_gender_id'].mode()))
+test.user_gender_id = test.user_gender_id.replace(-1,int(test['user_gender_id'].mode()))
 
-train.user_occupation_id = train.user_occupation_id.replace(-1,train['user_occupation_id'].mode())
-test.user_occupation_id = test.user_occupation_id.replace(-1,test['user_occupation_id'].mode())
-print(train[train.user_occupation_id==-1].shape[0])
 
-train.user_star_level = train.user_star_level.replace(-1,train['user_star_level'].mode())
-test.user_star_level = test.user_star_level.replace(-1,test['user_star_level'].mode())
-print(train[train.user_star_level==-1].shape[0])
+train.user_age_level = train.user_age_level.replace(-1,int(train['user_age_level'].mode()))
+test.user_age_level = test.user_age_level.replace(-1,int(test['user_age_level'].mode()))
 
-train.shop_review_positive_rate = train.shop_review_positive_rate.replace(-1,1)
-test.shop_review_positive_rate = test.shop_review_positive_rate.replace(-1,1)
-print(train[train.shop_review_positive_rate==-1].shape[0])
 
-train.shop_score_service = train.shop_score_service.replace(-1,1)
-test.shop_score_service = test.shop_score_service.replace(-1,1)
-print(train[train.shop_score_service==-1].shape[0])
+train.user_occupation_id = train.user_occupation_id.replace(-1,int(train['user_occupation_id'].mode()))
+test.user_occupation_id = test.user_occupation_id.replace(-1,int(test['user_occupation_id'].mode()))
 
-train.shop_score_delivery = train.shop_score_delivery.replace(-1,1)
-test.shop_score_delivery = test.shop_score_delivery.replace(-1,1)
-print(train[train.shop_score_delivery==-1].shape[0])
 
-train.shop_score_description = train.shop_score_description.replace(-1,1)
-test.shop_score_description = test.shop_score_description.replace(-1,1)
-print(train[train.shop_score_description==-1].shape[0])
+train.user_star_level = train.user_star_level.replace(-1,int(train['user_star_level'].mode()))
+test.user_star_level = test.user_star_level.replace(-1,int(test['user_star_level'].mode()))
+
+train.shop_review_positive_rate = train.shop_review_positive_rate.replace(-1,int(train[train.shop_review_positive_rate!=-1]['shop_review_positive_rate'].mode()))
+test.shop_review_positive_rate = test.shop_review_positive_rate.replace(-1,int(test[test.shop_review_positive_rate!=-1]['shop_review_positive_rate'].mode()))
+
+
+train.shop_score_service = train.shop_score_service.replace(-1,int(train[train.shop_score_service!=-1]['shop_score_service'].mode()))
+test.shop_score_service = test.shop_score_service.replace(-1,int(test[test.shop_score_service!=-1]['shop_score_service'].mode()))
+
+
+train.shop_score_delivery = train.shop_score_delivery.replace(-1,int(train[train.shop_score_delivery!=-1]['shop_score_delivery'].mode()))
+test.shop_score_delivery = test.shop_score_delivery.replace(-1,int(test[test.shop_score_delivery!=-1]['shop_score_delivery'].mode()))
+
+train.shop_score_description = train.shop_score_description.replace(-1,int(train[train.shop_score_description!=-1]['shop_score_description'].mode()))
+test.shop_score_description = test.shop_score_description.replace(-1,int(test[test.shop_score_description!=-1]['shop_score_description'].mode()))
+
 
 # 首先将商品类目切分
 def split_item_category(s):
@@ -115,9 +109,6 @@ test['is_am']=test['hour'].apply(lambda x:1 if x<12 else 0)
 # 将double切换为float
 train[['shop_review_positive_rate','shop_score_service','shop_score_delivery','shop_score_description']]=train[['shop_review_positive_rate','shop_score_service','shop_score_delivery','shop_score_description']].astype(float)
 test[['shop_review_positive_rate','shop_score_service','shop_score_delivery','shop_score_description']]=test[['shop_review_positive_rate','shop_score_service','shop_score_delivery','shop_score_description']].astype(float)
-
-
-
 # 将商品属性切分
 # train['prop']=train['item_property_list'].apply(split_item_category)
 # train['prop1'] = train['prop'].apply(lambda x:x[0])
@@ -155,51 +146,97 @@ def isale1(x):
     if(x==11.0)|(x==12.0)|(x==13.0)|(x==14.0):
         return 'is3'
     return 'is1'
-train['ustar'] = train['user_star_level'].apply(ustar1)
-train['uage'] = train['user_age_level'].apply(uage1)
-train['iprice'] = train['item_price_level'].apply(ipri1)
-# train1_p['isale'] = train1_p['item_sales_level'].astype(int).apply(isale)
-ustar = pd.get_dummies(train['ustar'])
-train = pd.concat([train,ustar],axis=1)
-uage = pd.get_dummies(train['uage'])
-train = pd.concat([train,uage],axis=1)
-iprice = pd.get_dummies(train['iprice'])
-train = pd.concat([train,iprice],axis=1)
-# isale = pd.get_dummies(train1_p['isale'])
-# train1_p = pd.concat([train1_p,isale],axis=1)
+def myime(x):
+    if (x>=0)&(x<=6):
+        return 'lingchen'
+    elif(x>6)&(x<=18):
+        return 'baitian'
+    else:
+        return 'yejian'
+# train['ustar'] = train['user_star_level'].apply(ustar1)
+# train['uage'] = train['user_age_level'].apply(uage1)
+# train['iprice'] = train['item_price_level'].apply(ipri1)
+# ustar = pd.get_dummies(train['ustar'])
+# train = pd.concat([train,ustar],axis=1)
+# uage = pd.get_dummies(train['uage'])
+# train = pd.concat([train,uage],axis=1)
+# iprice = pd.get_dummies(train['iprice'])
+# train = pd.concat([train,iprice],axis=1)
+train['timeduan'] = train['hour'].apply(myime)
 
 
-test['ustar'] = test['user_star_level'].apply(ustar1)
-test['uage'] = test['user_age_level'].apply(uage1)
-test['iprice'] = test['item_price_level'].apply(ipri1)
-# train2_p['isale'] = train2_p['item_sales_level'].astype(int).apply(isale)
-ustar = pd.get_dummies(test['ustar'])
-test = pd.concat([test,ustar],axis=1)
-uage = pd.get_dummies(test['uage'])
-test = pd.concat([test,uage],axis=1)
-iprice = pd.get_dummies(test['iprice'])
-# print(iprice)
-test = pd.concat([test,iprice],axis=1)
-# isale = pd.get_dummies(train2_p['isale'])
-# train2_p = pd.concat([train2_p,isale],axis=1)
 
+# test['ustar'] = test['user_star_level'].apply(ustar1)
+# test['uage'] = test['user_age_level'].apply(uage1)
+# test['iprice'] = test['item_price_level'].apply(ipri1)
+# ustar = pd.get_dummies(test['ustar'])
+# test = pd.concat([test,ustar],axis=1)
+# uage = pd.get_dummies(test['uage'])
+# test = pd.concat([test,uage],axis=1)
+# iprice = pd.get_dummies(test['iprice'])
+# test = pd.concat([test,iprice],axis=1)
+test['timeduan'] = test['hour'].apply(myime)
 
+print(train.context_timestamp.min())
+print(train.context_timestamp.max())
 # 生成训练集和预测集
-train2_f = train[(train.context_timestamp>='20180919000000')&(train.context_timestamp<='20180923240000')]
-train2_p= train[(train.context_timestamp>='20180924000000')&(train.context_timestamp<='20180924240000')]
-
-train1_f = train[(train.context_timestamp>='20180918000000')&(train.context_timestamp<='20180922240000')]
-train1_p = train[(train.context_timestamp>='20180923000000')&(train.context_timestamp<='20180923240000')]
-
-train3_f = train[(train.context_timestamp>='20180920000000')&(train.context_timestamp<='20180924240000')]
-train3_p = test
-
+train1_f = train[(train.context_timestamp>='20180831000000')&(train.context_timestamp<='20180903240000')]
+train1_p = train[(train.context_timestamp>='20180904120000')&(train.context_timestamp<='20180904240000')]
 train1_f.to_csv('data/train1_f.csv',index=None)
 train1_p.to_csv('data/train1_p.csv',index=None)
+del train1_f
+del train1_p
+gc.collect()
+
+
+train2_f = train[(train.context_timestamp>='20180901000000')&(train.context_timestamp<='20180904240000')]
+train2_p= train[(train.context_timestamp>='20180905120000')&(train.context_timestamp<='20180905240000')]
 train2_f.to_csv('data/train2_f.csv',index=None)
 train2_p.to_csv('data/train2_p.csv',index=None)
+del train2_f
+del train2_p
+gc.collect()
+
+train4_f = train[(train.context_timestamp>='20180902000000')&(train.context_timestamp<='20180905240000')]
+train4_p = train[(train.context_timestamp>='20180906120000')&(train.context_timestamp<='20180906240000')]
+train4_f.to_csv('data/train4_f.csv',index=None)
+train4_p.to_csv('data/train4_p.csv',index=None)
+del train4_f
+del train4_p
+gc.collect()
+
+# train5_f = train[(train.context_timestamp>='20180918000000')&(train.context_timestamp<='20180920240000')]
+# train5_p = train[(train.context_timestamp>='20180921000000')&(train.context_timestamp<='20180921240000')]
+
+train3_f = train[(train.context_timestamp>='20180903000000')&(train.context_timestamp<='20180906240000')]
+train3_p = test
 train3_f.to_csv('data/train3_f.csv',index=None)
 train3_p.to_csv('data/train3_p.csv',index=None)
-train.to_csv('data/traint.csv',index=None)
+del train3_f
+del train3_p
+gc.collect()
+
+
+t = train[(train.context_timestamp>='20180831000000')&(train.context_timestamp<='20180831240000')&(train.is_trade==1)]
+print(t.shape[0])
+t = train[(train.context_timestamp>='20180901000000')&(train.context_timestamp<='20180901240000')&(train.is_trade==1)]
+print(t.shape[0])
+t = train[(train.context_timestamp>='20180902000000')&(train.context_timestamp<='20180902240000')&(train.is_trade==1)]
+print(t.shape[0])
+t = train[(train.context_timestamp>='20180903000000')&(train.context_timestamp<='20180903240000')&(train.is_trade==1)]
+print(t.shape[0])
+t = train[(train.context_timestamp>='20180904000000')&(train.context_timestamp<='20180904240000')&(train.is_trade==1)]
+print(t.shape[0])
+t = train[(train.context_timestamp>='20180905000000')&(train.context_timestamp<='20180905240000')&(train.is_trade==1)]
+print(t.shape[0])
+t = train[(train.context_timestamp>='20180906000000')&(train.context_timestamp<='20180906240000')&(train.is_trade==1)]
+print(t.shape[0])
+
+
+
+
+# train5_f.to_csv('data/train5_f.csv',index=None)
+# train5_p.to_csv('data/train5_p.csv',index=None)
+# train.to_csv('data/traint.csv',index=None)
 
 

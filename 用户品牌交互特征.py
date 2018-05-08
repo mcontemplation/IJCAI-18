@@ -198,6 +198,56 @@ train[['user_brand_click','user_brand_buy','user_brand_rate','user_brand_crate',
 
 
 
+# 从训练集1中提取用户品牌交互特征
+train = pd.read_csv('data/train4_f.csv')
+u = pd.read_csv('data/user_feature4.csv')
+u = u[['user_id','user_click_total','user_click_buy_total']]
+u = u.drop_duplicates()
+# 用户点击该品牌次数
+t = train[['user_id','item_brand_id']]
+t['user_brand_click'] = 1
+t = t.groupby(['user_id','item_brand_id']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_id','item_brand_id'],how='left')
+# 用户购买该品牌次数
+t = train[['user_id','item_brand_id','is_trade']]
+t = t.groupby(['user_id','item_brand_id']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'user_brand_buy'})
+train = pd.merge(train,t,on=['user_id','item_brand_id'],how='left')
+# 用户购买该品牌次数占该用户总购买比率
+u = u.drop_duplicates()
+train = pd.merge(train,u[['user_id','user_click_buy_total']],on='user_id',how='left')
+train['user_brand_rate'] = train['user_brand_buy']/train['user_click_buy_total']
+# 用户点击该品牌次数占该用户总点击比率
+train = pd.merge(train,u[['user_id','user_click_total']],on='user_id',how='left')
+train['user_brand_crate'] = train['user_brand_click']/train['user_click_total']
+train = train.drop_duplicates()
+train[['user_brand_click','user_brand_buy','user_brand_rate','user_brand_crate','user_id','item_brand_id']].to_csv('data/user_brand_feature4.csv',index=None)
 
 
 
+
+
+# # 从训练集1中提取用户品牌交互特征
+# train = pd.read_csv('data/train5_f.csv')
+# u = pd.read_csv('data/user_feature5.csv')
+# u = u[['user_id','user_click_total','user_click_buy_total']]
+# u = u.drop_duplicates()
+# # 用户点击该品牌次数
+# t = train[['user_id','item_brand_id']]
+# t['user_brand_click'] = 1
+# t = t.groupby(['user_id','item_brand_id']).agg('sum').reset_index()
+# train = pd.merge(train,t,on=['user_id','item_brand_id'],how='left')
+# # 用户购买该品牌次数
+# t = train[['user_id','item_brand_id','is_trade']]
+# t = t.groupby(['user_id','item_brand_id']).agg('sum').reset_index()
+# t = t.rename(columns={'is_trade':'user_brand_buy'})
+# train = pd.merge(train,t,on=['user_id','item_brand_id'],how='left')
+# # 用户购买该品牌次数占该用户总购买比率
+# u = u.drop_duplicates()
+# train = pd.merge(train,u[['user_id','user_click_buy_total']],on='user_id',how='left')
+# train['user_brand_rate'] = train['user_brand_buy']/train['user_click_buy_total']
+# # 用户点击该品牌次数占该用户总点击比率
+# train = pd.merge(train,u[['user_id','user_click_total']],on='user_id',how='left')
+# train['user_brand_crate'] = train['user_brand_click']/train['user_click_total']
+# train = train.drop_duplicates()
+# train[['user_brand_click','user_brand_buy','user_brand_rate','user_brand_crate','user_id','item_brand_id']].to_csv('data/user_brand_feature5.csv',index=None)

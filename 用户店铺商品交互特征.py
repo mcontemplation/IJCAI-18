@@ -89,3 +89,62 @@ t['u_s_i_uclick_rate'] = t['u_s_i_click']/t['user_item_click_total']
 train = pd.merge(train,t[['user_id','shop_id','item_id','u_s_i_uclick_rate']],on=['user_id','shop_id','item_id'],how='left')
 
 train[['u_s_i_click','u_s_i_buy','u_s_i_uclick_rate','user_id','shop_id','item_id']].to_csv('data/user_shop_item_feature3.csv',index=None)
+
+
+
+
+# 从训练集4中提取
+train = pd.read_csv('data/train4_f.csv')
+u = pd.read_csv('data/user_item_feature4.csv')#user_item_click_total,user_item_click_buy_total
+u.drop_duplicates()
+s = pd.read_csv('data/shop_feature4.csv')#shop_click_total,shop_click_buy_total
+s.drop_duplicates()
+i = pd.read_csv('data/item_feature4.csv')#item_click,item_buy
+i.drop_duplicates()
+
+# 用户在该店铺点击该商品次数
+t = train[['user_id','shop_id','item_id']]
+t['u_s_i_click'] = 1
+t = t.groupby(['user_id','shop_id','item_id']).agg('sum').reset_index()
+train = pd.merge(train,t,on=['user_id','shop_id','item_id'],how='left')
+# 用户在该店铺购买该商品次数
+t = train[['user_id','shop_id','item_id','is_trade']]
+t = t.groupby(['user_id','shop_id','item_id']).agg('sum').reset_index()
+t = t.rename(columns={'is_trade':'u_s_i_buy'})
+train = pd.merge(train,t,on=['user_id','shop_id','item_id'],how='left')
+# 用户在该店铺点击该商品次数占用户点击该商品比
+t = train[['user_id','shop_id','item_id','u_s_i_click']]
+t = pd.merge(t,u[['user_item_click_total','user_id','item_id']],on=['user_id','item_id'],how='left')
+t['u_s_i_uclick_rate'] = t['u_s_i_click']/t['user_item_click_total']
+train = pd.merge(train,t[['user_id','shop_id','item_id','u_s_i_uclick_rate']],on=['user_id','shop_id','item_id'],how='left')
+
+train[['u_s_i_click','u_s_i_buy','u_s_i_uclick_rate','user_id','shop_id','item_id']].to_csv('data/user_shop_item_feature4.csv',index=None)
+
+
+
+# # 从训练集5中提取
+# train = pd.read_csv('data/train5_f.csv')
+# u = pd.read_csv('data/user_item_feature5.csv')#user_item_click_total,user_item_click_buy_total
+# u.drop_duplicates()
+# s = pd.read_csv('data/shop_feature5.csv')#shop_click_total,shop_click_buy_total
+# s.drop_duplicates()
+# i = pd.read_csv('data/item_feature5.csv')#item_click,item_buy
+# i.drop_duplicates()
+#
+# # 用户在该店铺点击该商品次数
+# t = train[['user_id','shop_id','item_id']]
+# t['u_s_i_click'] = 1
+# t = t.groupby(['user_id','shop_id','item_id']).agg('sum').reset_index()
+# train = pd.merge(train,t,on=['user_id','shop_id','item_id'],how='left')
+# # 用户在该店铺购买该商品次数
+# t = train[['user_id','shop_id','item_id','is_trade']]
+# t = t.groupby(['user_id','shop_id','item_id']).agg('sum').reset_index()
+# t = t.rename(columns={'is_trade':'u_s_i_buy'})
+# train = pd.merge(train,t,on=['user_id','shop_id','item_id'],how='left')
+# # 用户在该店铺点击该商品次数占用户点击该商品比
+# t = train[['user_id','shop_id','item_id','u_s_i_click']]
+# t = pd.merge(t,u[['user_item_click_total','user_id','item_id']],on=['user_id','item_id'],how='left')
+# t['u_s_i_uclick_rate'] = t['u_s_i_click']/t['user_item_click_total']
+# train = pd.merge(train,t[['user_id','shop_id','item_id','u_s_i_uclick_rate']],on=['user_id','shop_id','item_id'],how='left')
+#
+# train[['u_s_i_click','u_s_i_buy','u_s_i_uclick_rate','user_id','shop_id','item_id']].to_csv('data/user_shop_item_feature5.csv',index=None)
